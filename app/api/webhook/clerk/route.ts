@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import {clerkClient, WebhookEvent} from '@clerk/nextjs/server'
 import {createUser, deleteUser, updateUser} from "@/lib/actions/user.actions";
 import {NextResponse} from "next/server";
+import {CreateUserParams} from "@/types";
 
 export async function POST(req: Request) {
 
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
             photo: image_url
         }
 
-        const newUser = await createUser(user);
+        const newUser = await createUser(<CreateUserParams>user);
 
         if (newUser) {
             await clerkClient.users.updateUserMetadata(id, {
@@ -88,7 +89,7 @@ export async function POST(req: Request) {
             photo: image_url,
         }
 
-        const updatedUser = await updateUser(id, user)
+        const updatedUser = await updateUser(id, <CreateUserParams>user)
 
         return NextResponse.json({ message: 'OK', user: updatedUser })
     }
