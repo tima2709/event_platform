@@ -64,10 +64,10 @@ export async function POST(req: Request) {
             username: username!,
             firstName: first_name,
             lastName: last_name,
-            photo: image_url
+            photo: image_url,
         }
 
-        const newUser = await createUser(<CreateUserParams>user);
+        const newUser = await createUser(user);
 
         if (newUser) {
             await clerkClient.users.updateUserMetadata(id, {
@@ -89,7 +89,7 @@ export async function POST(req: Request) {
             photo: image_url,
         }
 
-        const updatedUser = await updateUser(id, <CreateUserParams>user)
+        const updatedUser = await updateUser(id, user)
 
         return NextResponse.json({ message: 'OK', user: updatedUser })
     }
